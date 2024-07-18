@@ -28,7 +28,7 @@ function App() {
         if (!message.trim() || !clientId) return;
 
         try {
-            const res = await axios.post('http://localhost:3001/api/chat', { message, clientId });
+            const res = await axios.post('https://chatbot-backend-mr8u.onrender.com/api/chat', { message, clientId });
             handleResponse(res.data);
             setMessage(''); // Clear input field after sending message
         } catch (error) {
