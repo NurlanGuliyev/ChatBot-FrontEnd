@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 import { routes, storageKeys, strings } from './constants';
@@ -26,17 +26,17 @@ const App = () => {
         }
     };
 
-    const handleSession = () => {
+    const handleSession = useCallback(() => {
         const storedClientId = localStorage.getItem(storageKeys.clientId) ||  generateUUID();
 
         localStorage.setItem(storageKeys.clientId, storedClientId);
 
         setClientId(storedClientId);
-    }
+    }, []);
 
     useEffect(() => {
         handleSession();
-    }, []);
+    }, [handleSession]);
 
 
     return (
@@ -53,7 +53,7 @@ const App = () => {
                 <input
                     type="text"
                     value={message}
-                    onChange={(e) => setMessage(e.target.value.trim())}
+                    onChange={(e) => setMessage(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                     placeholder={strings.inputPlaceholder}
                 />
